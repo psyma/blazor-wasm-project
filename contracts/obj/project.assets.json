@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/psyma/Desktop/blazor-project/contracts/contracts.csproj",
+      "projectUniqueName": "/home/psyma/Projects/blazor-wasm-project/contracts/contracts.csproj",
       "projectName": "contracts",
-      "projectPath": "/home/psyma/Desktop/blazor-project/contracts/contracts.csproj",
+      "projectPath": "/home/psyma/Projects/blazor-wasm-project/contracts/contracts.csproj",
       "packagesPath": "/home/psyma/.nuget/packages/",
-      "outputPath": "/home/psyma/Desktop/blazor-project/contracts/obj/",
+      "outputPath": "/home/psyma/Projects/blazor-wasm-project/contracts/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/psyma/.nuget/NuGet/NuGet.Config"

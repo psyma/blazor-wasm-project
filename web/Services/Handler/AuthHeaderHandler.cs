@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using ui.Services.JwtState;
+using web.Services.JwtState;
 
-namespace ui.Services.Handler;
+namespace web.Services.Handler;
 
 public class AuthHeaderHandler : DelegatingHandler
 {

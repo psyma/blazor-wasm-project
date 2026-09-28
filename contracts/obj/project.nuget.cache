@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wyrxt2kZ8Ik=",
+  "dgSpecHash": "Ihs8jBNLUjE=",
   "success": true,
-  "projectFilePath": "/home/psyma/Desktop/blazor-project/contracts/contracts.csproj",
+  "projectFilePath": "/home/psyma/Projects/blazor-wasm-project/contracts/contracts.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

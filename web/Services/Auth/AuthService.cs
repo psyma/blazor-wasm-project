@@ -1,9 +1,9 @@
 using System.Net.Http.Json;
 using contracts.Request;
 using contracts.Response;
-using ui.Services.JwtState;
+using web.Services.JwtState;
 
-namespace ui.Services.Auth;
+namespace web.Services.Auth;
 
 public class AuthService : IAuthService
 {

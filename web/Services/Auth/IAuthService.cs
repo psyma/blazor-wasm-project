@@ -1,6 +1,6 @@
 using contracts.Request;
 
-namespace ui.Services.Auth;
+namespace web.Services.Auth;
 
 public interface IAuthService
 {

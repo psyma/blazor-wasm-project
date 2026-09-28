@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace ui.Services.JwtState;
+namespace web.Services.JwtState;
 
 public class JwtAuthStateProvider : AuthenticationStateProvider
 {

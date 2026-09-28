@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using ui;
+using web;
 using MudBlazor.Services;
-using ui.Models.Static;
-using ui.Services.Auth;
-using ui.Services.Handler;
-using ui.Services.JwtState;
+using web.Models.Static;
+using web.Services.Auth;
+using web.Services.Handler;
+using web.Services.JwtState;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

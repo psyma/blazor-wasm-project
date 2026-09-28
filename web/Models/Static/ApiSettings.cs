@@ -1,4 +1,4 @@
-namespace ui.Models.Static;
+namespace web.Models.Static;
 
 public class ApiSettings
 {
