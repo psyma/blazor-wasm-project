@@ -1,0 +1,27 @@
+@page "/Authorized"
+
+@using Microsoft.AspNetCore.Components.Authorization
+@using ui.Services.Auth
+
+@inject IAuthService AuthService
+@inject ISnackbar Snackbar
+
+<AuthorizeView>
+    <Authorized>
+        Authorized <p>@context.User.Identity?.Name</p>
+        <MudButton OnClick="@test" Variant="Variant.Filled" Color="Color.Primary">Test</MudButton>
+    </Authorized>
+    <NotAuthorized>
+        <RedirectToLogin />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    private async Task test()
+    {
+        var success = await AuthService.Me();
+        if (success) Snackbar.Add("Success", Severity.Success);
+        else Snackbar.Add("Failed", Severity.Error);
+    }
+}

@@ -75,6 +75,27 @@ public class AuthController : Controller
         });
     }
 
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout(CancellationToken cancellationToken)
+    {
+        Request.Cookies.TryGetValue(_jwtSettings.RefreshCookieName, out var refreshToken);
+        if (string.IsNullOrWhiteSpace(refreshToken)) return Unauthorized();
+
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+
+        var tokenHash = HashRefreshToken(refreshToken);
+        var storedToken = await dbContext.RefreshTokens.FirstOrDefaultAsync(x => x.TokenHash == tokenHash, cancellationToken);
+
+        if (storedToken is not null && storedToken.RevokedAt is null)
+        {
+            storedToken.RevokedAt = DateTimeOffset.UtcNow;
+            await dbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        DeleteRefreshTokenCookie();
+        return NoContent();
+    }
+    
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request, CancellationToken cancellationToken)
     {
@@ -176,6 +197,17 @@ public class AuthController : Controller
             Secure = true,
             SameSite = SameSiteMode.None,
             Expires = expiresAt
+        });
+    }
+    
+    private void DeleteRefreshTokenCookie()
+    {
+        Response.Cookies.Delete(_jwtSettings.RefreshCookieName, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Path = "/"
         });
     }
 }

@@ -1,0 +1,18 @@
+@page "/Logout" 
+@using ui.Services.Auth
+@using ui.Services.JwtState
+
+@inject IAuthService AuthService
+@inject JwtAuthStateProvider JwtAuthStateProvider
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await JwtAuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        await AuthService.Logout(user.Identity?.Name);
+        
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+}

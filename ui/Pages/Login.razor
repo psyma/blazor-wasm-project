@@ -1,0 +1,34 @@
+@page "/Login"
+@using contracts.Request
+@using ui.Services.Auth
+
+@inject IAuthService AuthService
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+
+<h3>Login</h3>
+
+<MudTextField @bind-Value="Input.Email" InputType="InputType.Email" Margin="Margin.Dense" Label="Email" ShrinkLabel="true" />
+<MudTextField @bind-Value="Input.Password" InputType="InputType.Password" Margin="Margin.Dense" Label="Password" ShrinkLabel="true" />
+<MudButton OnClick="@HandleLogin" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Login</MudButton>
+@code {
+    private InputModel Input { get; set; } = new();
+
+    private async Task HandleLogin()
+    {
+        var success = await AuthService.Login(new LoginRequest()
+        {
+            Email = Input.Email,
+            Password = Input.Password,
+        });
+
+        if (success) NavigationManager.NavigateTo("/");
+        else Snackbar.Add("Invalid email or password", Severity.Error);
+    }
+    
+    private sealed class InputModel
+    {
+        public string Email { get; set; } = "test@test.com";
+        public string Password { get; set; } = "Password!1234";
+    }
+}

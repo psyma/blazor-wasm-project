@@ -4,6 +4,7 @@ using api.Database;
 using api.Models.Static;
 using api.Services.JwtToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddIdentityCore<ApplicationUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddRoles<IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddSignInManager();
 
 builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(options =>
 {
@@ -54,6 +57,18 @@ builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 builder.Services.Configure<RoleArray>(x => builder.Configuration.GetSection("RoleArray").Bind(x.Roles));
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings")); 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ui", policy =>
+    {
+        policy
+            .WithOrigins("https://localhost:7028")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -71,6 +86,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("ui");
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -19,17 +19,11 @@ public class JwtTokenService : IJwtTokenService
     
     public string CreateAccessToken(Guid userId, string email, IEnumerable<string> roles)
     {
-        var claims = new Dictionary<string, object>
-        {
-            [JwtRegisteredClaimNames.Sub] = userId.ToString(),
-            [JwtRegisteredClaimNames.Email] = email,
-            [JwtRegisteredClaimNames.Jti] = Guid.NewGuid().ToString()
-        };
 
         var identity = new ClaimsIdentity();
-
         identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()));
         identity.AddClaim(new Claim(JwtRegisteredClaimNames.Email, email));
+        identity.AddClaim(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
         foreach (var role in roles)
         {
@@ -44,7 +38,6 @@ public class JwtTokenService : IJwtTokenService
         {
             Issuer = _settings.Issuer,
             Audience = _settings.Audience,
-            Claims = claims,
             Subject = identity,
             Expires = expires,
             SigningCredentials = credentials
