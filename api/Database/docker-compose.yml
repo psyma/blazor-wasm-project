@@ -1,0 +1,16 @@
+name: blazor
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    #restart: unless-stopped
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: blazor
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 15432:5432
+volumes:
+  pgvector_data:
